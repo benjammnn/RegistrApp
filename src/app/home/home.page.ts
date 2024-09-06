@@ -6,6 +6,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormControl,FormsModule,ReactiveFormsModule,Validators} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
 import {merge} from 'rxjs';
 
 /**
@@ -17,7 +18,7 @@ import {merge} from 'rxjs';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonicModule,MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule],
+  imports: [IonicModule,MatFormFieldModule, MatSelectModule,MatInputModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage {
@@ -46,4 +47,11 @@ export class HomePage {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
+
+  protected readonly value = signal('');
+
+  protected onInput(event: Event) {
+    this.value.set((event.target as HTMLInputElement).value);
+  }
+
 }

@@ -25,15 +25,21 @@
       </ion-card-header>
     
       <ion-card-content>
-        <mat-form-field class="example-form-field">
-          <mat-label>Clearable input</mat-label>
-          <input matInput type="text" [(ngModel)]="value">
-          @if (value) {
-            <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-              <mat-icon>close</mat-icon>
-            </button>
-          }
-        </mat-form-field>        
+        <div class="example-container">
+          <mat-form-field>
+            <mat-label>Ingresa tu email</mat-label>
+            <input
+              matInput
+              placeholder="usuario@duocuc.cl"
+              [formControl]="email"
+              (blur)="updateErrorMessage()"
+              required
+            />
+            @if (email.invalid) {
+              <mat-error>{{errorMessage()}}</mat-error>
+            }
+          </mat-form-field>
+        </div>        
       </ion-card-content>
     
       <ion-button fill="clear">Action 1</ion-button>

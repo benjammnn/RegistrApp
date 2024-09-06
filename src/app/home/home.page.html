@@ -26,7 +26,7 @@
     
       <ion-card-content>
         <div>
-          <mat-form-field>
+          <mat-form-field style="width : 50%;">
             <mat-label>Ingresa tu email</mat-label>
             <input
               matInput
@@ -41,7 +41,7 @@
           </mat-form-field>
         </div>
         <div>
-          <mat-form-field>
+          <mat-form-field style="width : 50%;">
             <mat-label>Enter your password</mat-label>
             <input matInput [type]="hide() ? 'password' : 'text'" />
             <button
@@ -53,15 +53,15 @@
             >
               <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
-            <mat-hint align="end">
+            <mat-hint align="start">
               <a href="#pendiente">¿Olvido su contraseña?</a>
             </mat-hint>
           </mat-form-field>
         </div>
       </ion-card-content>
-    
-      <ion-button fill="clear">Action 1</ion-button>
-      <ion-button fill="clear">{{currentScreenSize}}</ion-button>
+      <div>
+        <ion-button fill="clear">{{currentScreenSize}}</ion-button>
+      </div>
     </ion-card>
   </div>
 </ion-content>

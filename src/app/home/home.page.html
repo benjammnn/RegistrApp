@@ -25,7 +25,7 @@
       </ion-card-header>
     
       <ion-card-content>
-        <div class="example-container">
+        <div>
           <mat-form-field>
             <mat-label>Ingresa tu email</mat-label>
             <input
@@ -39,7 +39,22 @@
               <mat-error>{{errorMessage()}}</mat-error>
             }
           </mat-form-field>
-        </div>        
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>Enter your password</mat-label>
+            <input matInput [type]="hide() ? 'password' : 'text'" />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="clickEvent($event)"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide()"
+            >
+              <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
       </ion-card-content>
     
       <ion-button fill="clear">Action 1</ion-button>

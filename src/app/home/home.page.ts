@@ -21,7 +21,6 @@ import {merge} from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage {
-
   readonly email = new FormControl('', [Validators.required, Validators.email]);
 
   errorMessage = signal('');
@@ -40,5 +39,11 @@ export class HomePage {
     } else {
       this.errorMessage.set('');
     }
+  }
+
+  hide = signal(true);
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 }

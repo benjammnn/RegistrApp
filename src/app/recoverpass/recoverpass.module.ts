@@ -13,8 +13,9 @@ import { RecoverpassPage } from './recoverpass.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    RecoverpassPageRoutingModule
+    RecoverpassPageRoutingModule,
+    RecoverpassPage
   ],
-  declarations: [RecoverpassPage]
+  declarations: []
 })
 export class RecoverpassPageModule {}

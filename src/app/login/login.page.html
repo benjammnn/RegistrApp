@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="false">
   <ion-toolbar>
     <ion-title>
       RegistrAPP
@@ -7,16 +7,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <div id="container">
-    <ion-card style="margin-left:25%;
-    margin-right: 25%;
-    top: 50%;
+    <ion-card [ngClass]="currentScreenClass"
+    style="top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);">
       <ion-card-header style="background-color: darkslateblue;">
@@ -27,7 +20,7 @@
       <ion-card-content>
         <div style="margin-top: 1em;">
           <mat-form-field style="width : 50%;">
-            <mat-label>Ingresa tu email</mat-label>
+            <mat-label [ngStyle]="{'font-size': getFontSize()}">Ingresa tu email</mat-label>
             <input
               matInput
               placeholder="usuario@duocuc.cl"
@@ -42,7 +35,7 @@
         </div>
         <div>
           <mat-form-field style="width : 50%;">
-            <mat-label>Enter your password</mat-label>
+            <mat-label [ngStyle]="{'font-size': getFontSize()}">Enter your password</mat-label>
             <input matInput [type]="hide() ? 'password' : 'text'" [formControl]="password" />
             <button
               mat-icon-button

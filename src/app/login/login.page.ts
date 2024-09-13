@@ -1,4 +1,5 @@
 import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ChangeDetectionStrategy, Component, signal, OnDestroy, inject } from '@angular/core';
@@ -17,7 +18,7 @@ import { Router, NavigationExtras } from '@angular/router';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [ IonicModule, MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule ],
+  imports: [ IonicModule, MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, CommonModule ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPage implements OnDestroy {
@@ -28,6 +29,7 @@ export class LoginPage implements OnDestroy {
   errorMessage = signal('');
   destroyed = new Subject<void>();
   currentScreenSize: string = ''; 
+  currentScreenClass: string = '';
 
   displayNameMap = new Map([
     [Breakpoints.XSmall, 'XSmall'],
@@ -37,12 +39,41 @@ export class LoginPage implements OnDestroy {
     [Breakpoints.XLarge, 'XLarge'],
   ]);
 
+  fontSizeMap = new Map([
+    ['XSmall', '12px'],
+    ['Small', '14px'],
+    ['Medium', '16px'],
+    ['Large', '18px'],
+    ['XLarge', '20px'],
+  ]);
+
+  getFontSize(): string {
+    return this.fontSizeMap.get(this.currentScreenSize) || '16px';
+  }
+
+  private getScreenClass(query: string): string {
+    switch (query) {
+      case Breakpoints.XSmall:
+        return 'card-xsmall';
+      case Breakpoints.Small:
+        return 'card-small';
+      case Breakpoints.Medium:
+        return 'card-medium';
+      case Breakpoints.Large:
+        return 'card-large';
+      case Breakpoints.XLarge:
+        return 'card-xlarge';
+      default:
+        return '';
+    }
+  }
+
   constructor(private router: Router) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
 
-      inject(BreakpointObserver)
+    inject(BreakpointObserver)
       .observe([
         Breakpoints.XSmall,
         Breakpoints.Small,
@@ -54,6 +85,7 @@ export class LoginPage implements OnDestroy {
       .subscribe(result => {
         for (const query of Object.keys(result.breakpoints)) {
           if (result.breakpoints[query]) {
+            this.currentScreenClass = this.getScreenClass(query);
             this.currentScreenSize = this.displayNameMap.get(query) ?? 'Unknown';
           }
         }
@@ -107,5 +139,4 @@ export class LoginPage implements OnDestroy {
   protected onInput(event: Event) {
     this.value.set((event.target as HTMLInputElement).value);
   }
-
 }

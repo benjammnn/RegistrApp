@@ -1,4 +1,5 @@
 import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 import { Component, signal, inject } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './recoverpass.page.html',
   styleUrls: ['./recoverpass.page.scss'],
   standalone: true,
-  imports: [ IonicModule, MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule, MatInputModule ],
+  imports: [ IonicModule, MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule, MatInputModule, CommonModule ],
 })
 export class RecoverpassPage {
 
@@ -26,6 +27,7 @@ export class RecoverpassPage {
   errorMessage = signal('');
   destroyed = new Subject<void>();
   currentScreenSize: string = ''; 
+  currentScreenClass: string = '';
 
   displayNameMap = new Map([
     [Breakpoints.XSmall, 'XSmall'],
@@ -35,6 +37,35 @@ export class RecoverpassPage {
     [Breakpoints.XLarge, 'XLarge'],
   ]);
 
+  fontSizeMap = new Map([
+    ['XSmall', '12px'],
+    ['Small', '14px'],
+    ['Medium', '16px'],
+    ['Large', '18px'],
+    ['XLarge', '20px'],
+  ]);
+
+  getFontSize(): string {
+    return this.fontSizeMap.get(this.currentScreenSize) || '16px';
+  }
+
+  private getScreenClass(query: string): string {
+    switch (query) {
+      case Breakpoints.XSmall:
+        return 'card-xsmall';
+      case Breakpoints.Small:
+        return 'card-small';
+      case Breakpoints.Medium:
+        return 'card-medium';
+      case Breakpoints.Large:
+        return 'card-large';
+      case Breakpoints.XLarge:
+        return 'card-xlarge';
+      default:
+        return '';
+    }
+  }
+
   constructor(private router: Router) {
     const navigation = this.router.getCurrentNavigation();
     this.user = navigation?.extras.state?.['user'];
@@ -43,7 +74,7 @@ export class RecoverpassPage {
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
 
-      inject(BreakpointObserver)
+    inject(BreakpointObserver)
       .observe([
         Breakpoints.XSmall,
         Breakpoints.Small,
@@ -55,6 +86,7 @@ export class RecoverpassPage {
       .subscribe(result => {
         for (const query of Object.keys(result.breakpoints)) {
           if (result.breakpoints[query]) {
+            this.currentScreenClass = this.getScreenClass(query);
             this.currentScreenSize = this.displayNameMap.get(query) ?? 'Unknown';
           }
         }

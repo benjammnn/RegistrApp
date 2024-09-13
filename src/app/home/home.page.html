@@ -26,7 +26,6 @@
               Configuraciones
             </button>
             <button class="example-menu-item" cdkMenuItem>Ayuda</button>
-            <button class="example-menu-item" cdkMenuItem>Cerrar sesion</button>
           </div>
         </ng-template>
       </div>
@@ -39,6 +38,9 @@
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>Bienvenido {{ user }}!</ion-title>
+        <ion-buttons slot="end">Cerrar sesion
+          <ion-menu-button (click)="navigateToLogin()"><mat-icon>home</mat-icon></ion-menu-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">

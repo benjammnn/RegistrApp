@@ -64,4 +64,9 @@ export class HomePage {
 
     this.user = (email && email.indexOf('@') !== -1) ? email.substring(0, email.indexOf('@')) : email;
   }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
+
 }

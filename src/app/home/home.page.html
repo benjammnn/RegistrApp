@@ -43,8 +43,8 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ion-padding">
-      <mat-grid-list cols="2" rowHeight="450">
+    <ion-content class="ion-padding" [ngStyle]="{'font-size': getFontSize()}">
+      <mat-grid-list cols="2" rowHeight="450" >
         <mat-grid-tile>
           <mat-card class="demo-inline-calendar-card">
             <mat-calendar [(selected)]="selected"></mat-calendar>
@@ -53,17 +53,20 @@
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-list>
-            <div mat-subheader>Documentos</div>
+            <div mat-subheader>
+              <mat-label [ngStyle]="{'font-size': getFontSize()}"></mat-label>
+
+            </div>
             @for (folder of folders; track folder) {
-              <mat-list-item>
+              <mat-list-item [ngStyle]="{'font-size': getFontSize()}">
                 <mat-icon matListItemIcon style="color: white;">folders</mat-icon>
                 <div matListItemTitle>{{folder.name}}</div>
                 <div matListItemLine>{{folder.updated | date}}</div>
               </mat-list-item>
             }
-            <div mat-subheader>{{ user }}</div>
+            <div mat-subheader></div>
             @for (note of notes; track note) {
-              <mat-list-item>
+              <mat-list-item [ngStyle]="{'font-size': getFontSize()}">
                 <mat-icon matListItemIcon>note</mat-icon>
                 <div matListItemTitle>{{note.name}}</div>
                 <div matListItemLine>{{note.updated | date}}</div>

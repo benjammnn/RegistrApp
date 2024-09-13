@@ -23,6 +23,7 @@ import { Router, NavigationExtras } from '@angular/router';
 export class LoginPage implements OnDestroy {
 
   readonly email = new FormControl('', [Validators.required, Validators.email]);
+  readonly password = new FormControl('', [Validators.required]);
 
   errorMessage = signal('');
   destroyed = new Subject<void>();
@@ -60,11 +61,16 @@ export class LoginPage implements OnDestroy {
   }
 
   navigateToHome() {
-    let navigationExtras: NavigationExtras = {
-      state: { user: this.email.value }
-    };
-
-    this.router.navigate(['/home'], navigationExtras);
+    if (this.email.valid && this.password.valid) {
+      let navigationExtras: NavigationExtras = {
+        state: { user: this.email.value }
+      };
+  
+      this.router.navigate(['/home'], navigationExtras);
+    } else {
+      alert('Por favor, complete correctamente todos los campos.');
+    }
+    
   }
 
   navigateToRecoverpass() {

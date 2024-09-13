@@ -8,13 +8,14 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-recoverpass',
   templateUrl: './recoverpass.page.html',
   styleUrls: ['./recoverpass.page.scss'],
   standalone: true,
-  imports: [ IonicModule, MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule ],
+  imports: [ IonicModule, MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule, MatInputModule ],
 })
 export class RecoverpassPage {
 
@@ -61,11 +62,15 @@ export class RecoverpassPage {
   }
 
   navigateToLogin() {
-    let navigationExtras: NavigationExtras = {
-      state: { user: this.email.value }
-    };
-    
-    this.router.navigate(['/login'], navigationExtras);
+    if (this.email.valid) {
+      let navigationExtras: NavigationExtras = {
+        state: { user: this.email.value }
+      };
+      
+      this.router.navigate(['/login'], navigationExtras);
+    } else {
+      alert('Por favor, ingrese un correo para enviar la solicitud de cambio de contraseña.');
+    }
   }
 
   updateErrorMessage() {

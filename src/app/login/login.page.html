@@ -27,6 +27,7 @@
               [formControl]="email"
               (blur)="updateErrorMessage()"
               required
+              [(ngModel)]="username"
             />
             @if (email.invalid) {
               <mat-error>{{errorMessage()}}</mat-error>
@@ -36,7 +37,7 @@
         <div>
           <mat-form-field style="width : 50%;">
             <mat-label [ngStyle]="{'font-size': getFontSize()}">Enter your password</mat-label>
-            <input matInput [type]="hide() ? 'password' : 'text'" [formControl]="password" />
+            <input matInput [type]="hide() ? 'password' : 'text'" [formControl]="password" [(ngModel)]="pass" />
             <button
               mat-icon-button
               matSuffix
@@ -53,7 +54,7 @@
         </div>
       </ion-card-content>
       <div>
-        <ion-button (click)="navigateToHome()">Ingresar</ion-button>
+        <ion-button (click)="navigateToHome()" type="submit">Ingresar</ion-button>
       </div>
     </ion-card>
   </div>

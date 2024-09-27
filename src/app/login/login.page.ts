@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Router, NavigationExtras } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,9 @@ export class LoginPage implements OnDestroy {
   readonly email = new FormControl('', [Validators.required, Validators.email]);
   readonly password = new FormControl('', [Validators.required]);
 
+
+  username: string = '';
+  pass: string = '';
   errorMessage = signal('');
   destroyed = new Subject<void>();
   currentScreenSize: string = ''; 
@@ -68,7 +72,7 @@ export class LoginPage implements OnDestroy {
     }
   }
 
-  constructor(private router: Router) {
+  constructor(private authService:AuthService, private router: Router) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
@@ -91,6 +95,15 @@ export class LoginPage implements OnDestroy {
         }
       });
   }
+
+  login() {
+    if (this.authService.login(this.username, this.pass)) {
+    //aprovechamos de usar state para llevar la informacion al dashboard.
+    this.router.navigate(['/dashboard'], { state: { username: this.username } });
+    } else {
+    alert('Nombre de usuario o contraseña incorrectos');
+    }
+    }
 
   navigateToHome() {
     if (this.email.valid && this.password.valid) {

@@ -4,21 +4,23 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
+  private isAuthenticatedKey = 'isAuthenticated';
 
-  private isAuthenticated = false; // Simula si el usuario está autenticado
   login(username: string, password: string): boolean {
-    // Simulamos una validación de login
-    if (username === 'usuario' && password === '1234') {
-      this.isAuthenticated = true;
+    if (username === 'admin@duoc.cl' && password === '1234') {
+      localStorage.setItem(this.isAuthenticatedKey, 'true');
       return true;
     }
     return false;
   }
+
   isLoggedIn(): boolean {
-    return this.isAuthenticated;
+    return localStorage.getItem(this.isAuthenticatedKey) === 'true';
   }
+
   logout() {
-    this.isAuthenticated = false;
+    localStorage.removeItem(this.isAuthenticatedKey);
   }
+
   constructor() { }
 }

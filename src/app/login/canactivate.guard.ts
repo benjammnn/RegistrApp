@@ -7,12 +7,13 @@ import { AuthService } from './auth.service';
 })
 export class canActivate implements CanActivate {
   constructor(private authService: AuthService, private router: Router) { }
+
   canActivate(): boolean {
     if (this.authService.isLoggedIn()) {
-      return true;
-    } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
       return false;
+    } else {
+      return true;
     }
   }
 }

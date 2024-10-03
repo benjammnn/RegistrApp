@@ -2,7 +2,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ChangeDetectionStrategy, Component, signal, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, OnDestroy, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -22,7 +22,7 @@ import { AuthService } from './auth.service';
   imports: [ IonicModule, MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, CommonModule ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginPage implements OnDestroy {
+export class LoginPage implements OnDestroy, OnInit {
 
   readonly email = new FormControl('', [Validators.required, Validators.email]);
   readonly password = new FormControl('', [Validators.required]);
@@ -96,17 +96,17 @@ export class LoginPage implements OnDestroy {
       });
   }
 
-  login() {
-    if (this.authService.login(this.username, this.pass)) {
-    //aprovechamos de usar state para llevar la informacion al dashboard.
-    this.router.navigate(['/dashboard'], { state: { username: this.username } });
-    } else {
-    alert('Nombre de usuario o contraseña incorrectos');
-    }
-    }
-
   navigateToHome() {
+    // VALIDAR FORMATO
     if (this.email.valid && this.password.valid) {
+      // VALIDAR LOGIN
+      if (this.authService.login(this.username, this.pass)) {
+        this.router.navigate(['/dashboard'], { state: { username: this.username } });
+      } else {
+        alert('Nombre de usuario o contraseña incorrectos');
+        return;
+      }
+
       let navigationExtras: NavigationExtras = {
         state: { user: this.email.value }
       };
@@ -114,8 +114,8 @@ export class LoginPage implements OnDestroy {
       this.router.navigate(['/home'], navigationExtras);
     } else {
       alert('Por favor, complete correctamente todos los campos.');
+      return;
     }
-    
   }
 
   navigateToRecoverpass() {
@@ -129,6 +129,10 @@ export class LoginPage implements OnDestroy {
   ngOnDestroy() {
     this.destroyed.next();
     this.destroyed.complete();
+  }
+
+  ngOnInit() {
+    this.authService.logout();
   }
 
   updateErrorMessage() {

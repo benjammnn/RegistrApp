@@ -107,7 +107,7 @@ export class HomePage {
       });
   }
 
-  navigateToLogin() {
+  logOut() {
     this.router.navigate(['/login']);
   }
 

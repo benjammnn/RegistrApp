@@ -1,0 +1,22 @@
+.error-container {
+  text-align: center;
+  margin-top: 20%;
+
+  h1 {
+    font-size: 5rem;
+    color: var(--ion-color-danger);
+  }
+
+  p {
+    font-size: 1.5rem;
+    margin: 2% 0;
+  }
+
+  .route {
+    color: rgb(196, 54, 54);
+  }
+
+  .error-button {
+    margin-top: 1%;
+  }
+}

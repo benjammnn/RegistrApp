@@ -37,7 +37,12 @@
         <div>
           <mat-form-field style="width : 50%;">
             <mat-label [ngStyle]="{'font-size': getFontSize()}">Enter your password</mat-label>
-            <input matInput [type]="hide() ? 'password' : 'text'" [formControl]="password" [(ngModel)]="pass" />
+            <input 
+              matInput 
+              [type]="hide() ? 'password' : 'text'" 
+              [formControl]="password" 
+              [(ngModel)]="pass"
+            />
             <button
               mat-icon-button
               matSuffix

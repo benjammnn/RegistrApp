@@ -102,6 +102,7 @@ export class LoginPage implements OnDestroy, OnInit {
       // VALIDAR LOGIN
       if (this.authService.login(this.username, this.pass)) {
         this.router.navigate(['/dashboard'], { state: { username: this.username } });
+        this.password.reset();
       } else {
         alert('Nombre de usuario o contraseña incorrectos');
         return;

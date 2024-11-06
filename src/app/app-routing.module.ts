@@ -24,7 +24,11 @@ const routes: Routes = [
   {
     path: '**',
     loadChildren: () => import('./not-found/not-found.module').then( m => m.NotFoundPageModule)
+  },  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   },
+
 ];
 
 @NgModule({

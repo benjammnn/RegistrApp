@@ -15,6 +15,7 @@ import {MatListModule} from '@angular/material/list';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { AuthService } from './auth.service';
 
 export interface Section {
   name: string;
@@ -83,7 +84,7 @@ export class HomePage {
     return this.fontSizeMap.get(this.currentScreenSize) || '16px';
   }
 
-  constructor(private router: Router) {
+  constructor(private authService:AuthService, private router: Router) {
     const navigation = this.router.getCurrentNavigation();
     const email = navigation?.extras.state?.['user'];
 
@@ -108,6 +109,7 @@ export class HomePage {
   }
 
   logOut() {
+    //this.authService.logout();
     this.router.navigate(['/login']);
   }
 

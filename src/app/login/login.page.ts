@@ -128,6 +128,10 @@ export class LoginPage implements OnDestroy, OnInit {
     this.router.navigate(['/recoverpass'], navigationExtras);
   }
 
+  navigateToRegister() {
+     this.router.navigate(['/register']);
+  }
+
   ngOnDestroy() {
     this.destroyed.next();
     this.destroyed.complete();

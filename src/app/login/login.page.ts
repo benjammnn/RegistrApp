@@ -27,6 +27,7 @@ export class LoginPage implements OnDestroy, OnInit {
   readonly email = new FormControl('', [Validators.required, Validators.email]);
   readonly password = new FormControl('', [Validators.required]);
 
+  test: boolean = false;
 
   username: string = '';
   pass: string = '';
@@ -133,7 +134,8 @@ export class LoginPage implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this.authService.logout();
+    this.test = this.authService.isLoggedIn();
+    //this.authService.logout();
   }
 
   updateErrorMessage() {

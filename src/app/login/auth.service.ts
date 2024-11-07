@@ -18,9 +18,5 @@ export class AuthService {
     return localStorage.getItem(this.isAuthenticatedKey) === 'true';
   }
 
-  logout() {
-    localStorage.removeItem(this.isAuthenticatedKey);
-  }
-
   constructor() { }
 }

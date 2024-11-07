@@ -36,6 +36,8 @@ export interface Section {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage {
+  test: boolean = false;
+
   user: any;
   selected = model<Date | null>(null);
   destroyed = new Subject<void>();
@@ -109,8 +111,18 @@ export class HomePage {
   }
 
   logOut() {
-    //this.authService.logout();
-    this.router.navigate(['/login']);
+    this.authService.logOutLs();
+    this.test = this.authService.isLoggedIn();
+
+    this.refreshPage();
+  }
+
+  ngOnInit() {
+    this.test = this.authService.isLoggedIn();
+  }
+
+  refreshPage() {
+    window.location.reload();
   }
 
 }

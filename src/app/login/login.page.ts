@@ -132,6 +132,10 @@ export class LoginPage implements OnDestroy, OnInit {
      this.router.navigate(['/register']);
   }
 
+  navigateBack() {
+    this.router.navigate(['../']);
+  }
+
   ngOnDestroy() {
     this.destroyed.next();
     this.destroyed.complete();

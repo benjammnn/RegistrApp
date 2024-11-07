@@ -54,3 +54,10 @@
   margin-left: 30%;
   margin-right: 30%;
 }
+
+.espejo {
+  display: inline-block;
+  transform: scaleX(-1);
+  font-size: 50px;
+  color: black;
+}

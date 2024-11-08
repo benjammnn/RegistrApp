@@ -38,6 +38,10 @@ export class RegisterPage {
   updateErrorMessage() {
   }
 
+  navigateBack() {
+    this.router.navigate(['../']);
+  }
+
   createPost() {
     if (this.registerForm.valid) {
       const newPost = this.registerForm.value;
@@ -58,6 +62,4 @@ export class RegisterPage {
       console.log('Registro inválido');
     }
   }
-  
-
 }

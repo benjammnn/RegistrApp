@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+  private apiUrl = 'https://jsonplaceholder.typicode.com/users';
 
   constructor(private http: HttpClient) {}
 
@@ -28,8 +28,4 @@ export class ApiService {
   deletePost(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
-
-  
-
-
 }

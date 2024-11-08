@@ -102,11 +102,12 @@ export class LoginPage implements OnDestroy, OnInit {
       this.authService.login(this.username, this.pass).pipe(takeUntil(this.destroyed)).subscribe(
         (response) => {
           console.log('Usuario autenticado:', response);
-          // Guardar usuario en el almacenamiento local
           localStorage.setItem('currentUser', JSON.stringify(response));
 
-          // Redirigir al dashboard
-          this.router.navigate(['/dashboard'], { state: { username: this.username } });
+          let name = response.name;
+          let user = response.username;
+
+          this.router.navigate(['/home'], { state: { email: this.username, name: name, username: user } });
         },
         (error) => {
           alert('Nombre de usuario o contraseña incorrectos');
@@ -141,7 +142,6 @@ export class LoginPage implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.test = this.authService.isLoggedIn();
-    //this.authService.logout();
   }
 
   updateErrorMessage() {

@@ -37,9 +37,9 @@ export interface Section {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage implements OnInit {
+  name: string = '';
   username: string = '';
   email: string = '';
-  password: string ='';
 
   test: boolean = false;
   posts: any[] = [];
@@ -98,12 +98,12 @@ export class HomePage implements OnInit {
     const email = navigation?.extras.state?.['user'];
 
     if (state) {
+      this.name = state['name'] || ''           // Nombre completo
       this.username = state['username'] || '';  // Nombre de usuario
       this.email = state['email'] || '';        // Email
-      this.password = state['password'] || '';  // Contraseña
     }
 
-    this.user = (email && email.indexOf('@') !== -1) ? email.substring(0, email.indexOf('@')) : email;
+    //this.user = (email && email.indexOf('@') !== -1) ? email.substring(0, email.indexOf('@')) : email;
 
     inject(BreakpointObserver)
       .observe([

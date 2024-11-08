@@ -97,26 +97,24 @@ export class LoginPage implements OnDestroy, OnInit {
       });
   }
 
-  navigateToHome() {
-    // VALIDAR FORMATO
+  login() {
     if (this.email.valid && this.password.valid) {
-      // VALIDAR LOGIN
-      if (this.authService.login(this.username, this.pass)) {
-        this.router.navigate(['/dashboard'], { state: { username: this.username } });
-        this.password.reset();
-      } else {
-        alert('Nombre de usuario o contraseña incorrectos');
-        return;
-      }
+      this.authService.login(this.username, this.pass).pipe(takeUntil(this.destroyed)).subscribe(
+        (response) => {
+          console.log('Usuario autenticado:', response);
+          // Guardar usuario en el almacenamiento local
+          localStorage.setItem('currentUser', JSON.stringify(response));
 
-      let navigationExtras: NavigationExtras = {
-        state: { user: this.email.value }
-      };
-  
-      this.router.navigate(['/home'], navigationExtras);
+          // Redirigir al dashboard
+          this.router.navigate(['/dashboard'], { state: { username: this.username } });
+        },
+        (error) => {
+          alert('Nombre de usuario o contraseña incorrectos');
+          console.error('Error de login:', error);
+        }
+      );
     } else {
-      alert('Por favor, complete correctamente todos los campos.');
-      return;
+      alert('Por favor, ingrese correctamente todos los campos.');
     }
   }
 

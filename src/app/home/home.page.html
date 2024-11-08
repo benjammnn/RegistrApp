@@ -37,7 +37,7 @@
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Bienvenido {{ user }}! {{test}}</ion-title>
+        <ion-title>Bienvenido {{ user }}!</ion-title>
         <ion-buttons slot="end">
           <ion-menu-button (click)="logOut()"><mat-icon>logout</mat-icon></ion-menu-button>
         </ion-buttons>
@@ -59,7 +59,7 @@
             </div>
             @for (folder of folders; track folder) {
               <mat-list-item [ngStyle]="{'font-size': getFontSize()}">
-                <mat-icon matListItemIcon style="color: white;">folders</mat-icon>
+                <mat-icon matListItemIcon style="color: #1A1A1A;">folders</mat-icon>
                 <div matListItemTitle>{{folder.name}}</div>
                 <div matListItemLine>{{folder.updated | date}}</div>
               </mat-list-item>
@@ -67,7 +67,7 @@
             <div mat-subheader></div>
             @for (note of notes; track note) {
               <mat-list-item [ngStyle]="{'font-size': getFontSize()}">
-                <mat-icon matListItemIcon>note</mat-icon>
+                <mat-icon matListItemIcon style="color: #1A1A1A;">note</mat-icon>
                 <div matListItemTitle>{{note.name}}</div>
                 <div matListItemLine>{{note.updated | date}}</div>
               </mat-list-item>

@@ -1,26 +1,27 @@
 <ion-header [translucent]="false">
-  <ion-toolbar>
-    <ion-title>
+  <ion-toolbar style="background-color: #FFFFFF; border-bottom: 2px solid #FFB800;">
+    <ion-title style="color: #1A1A1A;">
+      <ion-button (click)="navigateBack()" fill="clear">
+        <div class="espejo" style="color: #FFB800;">➦</div>
+      </ion-button>
       RegistrAPP
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" style="background-color: #FFFFFF;">
   <div id="container">
     <ion-card [ngClass]="currentScreenClass" 
-    style="top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);">
-      <ion-card-header style="background-color: darkslateblue;">
-        <ion-card-title style="color: white;">Bienvenido a RegistrAPP</ion-card-title>
-        <ion-card-subtitle style="color: white;">Recuperar contraseña</ion-card-subtitle>
+      style="top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%); border: 1px solid #FFB800; background-color: #FFFFFF;">
+      <ion-card-header style="background-color: #FFB800;">
+        <ion-card-title style="color: #FFFFFF;">Bienvenido a RegistrAPP</ion-card-title>
+        <ion-card-subtitle style="color: #FFFFFF;">Recuperar contraseña</ion-card-subtitle>
       </ion-card-header>
-    
+
       <ion-card-content>
         <div style="margin-top: 1em;">
-          <mat-form-field style="width : 50%;">
-            <mat-label [ngStyle]="{'font-size': getFontSize()}">Ingresa tu email</mat-label>
+          <mat-form-field style="width: 50%; color: #1A1A1A;">
+            <mat-label [ngStyle]="{'font-size': getFontSize(), 'color': '#1A1A1A'}">Ingresa tu email</mat-label>
             <input
               matInput
               placeholder="usuario@duocuc.cl"
@@ -28,15 +29,16 @@
               [formControl]="email"
               (blur)="updateErrorMessage()"
               required
+              style="color: #1A1A1A;"
             />
             @if (email.invalid) {
-              <mat-error>{{errorMessage()}}</mat-error>
+              <mat-error style="color: #FFB800;">{{errorMessage()}}</mat-error>
             }
           </mat-form-field>
         </div>
       </ion-card-content>
       <div>
-        <ion-button (click)="navigateToLogin()">Enviar</ion-button>
+        <ion-button (click)="navigateToLogin()" color="tertiary">Enviar</ion-button>
       </div>
     </ion-card>
   </div>

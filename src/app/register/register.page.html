@@ -1,15 +1,20 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Register</ion-title>
+  <ion-toolbar style="background-color: #FFFFFF; border-bottom: 2px solid #FFB800;">
+    <ion-title style="color: #1A1A1A;">
+      <ion-button (click)="navigateBack()" fill="clear">
+        <div class="espejo" style="color: #FFB800;">➦</div>
+      </ion-button>
+      Register
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" style="background-color: #FFFFFF;">
   <div id="container">
-    <ion-card style="top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
-      <ion-card-header style="background-color: darkslateblue;">
-        <ion-card-title style="color: white;">Bienvenido a RegistrAPP</ion-card-title>
-        <ion-card-subtitle style="color: white;">Formulario de Registro</ion-card-subtitle>
+    <ion-card style="top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%); border: 1px solid #FFB800; background-color: #FFFFFF;">
+      <ion-card-header style="background-color: #FFB800;">
+        <ion-card-title style="color: #FFFFFF;">Bienvenido a RegistrAPP</ion-card-title>
+        <ion-card-subtitle style="color: #FFFFFF;">Formulario de Registro</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <form [formGroup]="registerForm" (ngSubmit)="createPost()">
@@ -18,6 +23,7 @@
               placeholder="Ingrese su usuario"
               label="Nombre de usuario"
               labelPlacement="floating"
+              style="color: #1A1A1A;"
             ></ion-input>
           </ion-item>
           <ion-item>
@@ -26,6 +32,7 @@
               placeholder="Ingrese su Email"
               label="Email"
               labelPlacement="floating"
+              style="color: #1A1A1A;"
             ></ion-input>
           </ion-item>
           <ion-item>
@@ -34,10 +41,12 @@
               placeholder="Ingrese su contraseña"
               label="Contraseña"
               labelPlacement="floating"
+              style="color: #1A1A1A;"
             ></ion-input>
           </ion-item>
-          <ion-button type="submit" expand="block" [disabled]="registerForm.invalid">Registrar</ion-button>
-          
+          <ion-button (click)="register()" type="submit" expand="block" [disabled]="registerForm.invalid" style="background-color: #FFB800; color: #FFFFFF;">
+            Registrar
+          </ion-button>
         </form>
       </ion-card-content>  
     </ion-card>

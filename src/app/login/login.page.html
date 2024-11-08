@@ -1,29 +1,27 @@
 <ion-header [translucent]="false">
-  <ion-toolbar>
-    <ion-title>
+  <ion-toolbar style="background-color: #FFFFFF; border-bottom: 2px solid #FFB800;">
+    <ion-title style="color: #1A1A1A;">
       <ion-button (click)="navigateBack()" fill="clear">
-        <div class="espejo">➦</div>
+        <div class="espejo" style="color: #FFB800;">➦</div>
       </ion-button>
-      RegistrAPP {{test}}
+      RegistrAPP
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" style="background-color: #FFFFFF;">
   <div id="container">
-    <ion-card [ngClass]="currentScreenClass"
-    style="top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);">
-      <ion-card-header style="background-color: darkslateblue;">
-        <ion-card-title style="color: white;">Bienvenido a RegistrAPP</ion-card-title>
-        <ion-card-subtitle style="color: white;">Inicio de Sesión</ion-card-subtitle>
+    <ion-card [ngClass]="currentScreenClass" 
+      style="top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%); border: 1px solid #FFB800; background-color: #FFFFFF;">
+      <ion-card-header style="background-color: #FFB800;">
+        <ion-card-title style="color: #FFFFFF;">Bienvenido a RegistrAPP</ion-card-title>
+        <ion-card-subtitle style="color: #FFFFFF;">Inicio de Sesión</ion-card-subtitle>
       </ion-card-header>
-    
+
       <ion-card-content>
         <div style="margin-top: 1em;">
-          <mat-form-field style="width : 50%;">
-            <mat-label [ngStyle]="{'font-size': getFontSize()}">Ingresa tu email</mat-label>
+          <mat-form-field style="width: 50%; color: #1A1A1A;">
+            <mat-label [ngStyle]="{'font-size': getFontSize(), 'color': '#1A1A1A'}">Ingresa tu email</mat-label>
             <input
               matInput
               placeholder="usuario@duocuc.cl"
@@ -31,20 +29,22 @@
               (blur)="updateErrorMessage()"
               required
               [(ngModel)]="username"
+              style="color: #1A1A1A;"
             />
             @if (email.invalid) {
-              <mat-error>{{errorMessage()}}</mat-error>
+              <mat-error style="color: #FFB800;">{{errorMessage()}}</mat-error>
             }
           </mat-form-field>
         </div>
         <div>
-          <mat-form-field style="width : 50%;">
-            <mat-label [ngStyle]="{'font-size': getFontSize()}">Enter your password</mat-label>
+          <mat-form-field style="width: 50%; color: #1A1A1A;">
+            <mat-label [ngStyle]="{'font-size': getFontSize(), 'color': '#1A1A1A'}">Enter your password</mat-label>
             <input 
               matInput 
               [type]="hide() ? 'password' : 'text'" 
               [formControl]="password" 
               [(ngModel)]="pass"
+              style="color: #1A1A1A;"
             />
             <button
               mat-icon-button
@@ -52,18 +52,19 @@
               (click)="clickEvent($event)"
               [attr.aria-label]="'Hide password'"
               [attr.aria-pressed]="hide()"
+              style="color: #FFB800;"
             >
               <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
-            <mat-hint align="start" class="clickable">
-              <a (click)="navigateToRecoverpass()">¿Olvido su contraseña?</a>
+            <mat-hint align="start" class="clickable" style="color: #FFB800;">
+              <a (click)="navigateToRecoverpass()" style="color: #FFB800;">¿Olvido su contraseña?</a>
             </mat-hint>
           </mat-form-field>
         </div>
       </ion-card-content>
       <div>
-        <ion-button (click)="navigateToHome()" type="submit">Ingresar</ion-button><br>
-        <ion-button (click)="navigateToRegister()" type="submit">Registrarse</ion-button>
+        <ion-button (click)="login()" type="submit" color="tertiary">Ingresar</ion-button><br>
+        <ion-button (click)="navigateToRegister()" type="submit" color="tertiary">Registrarse</ion-button>
       </div>
     </ion-card>
   </div>

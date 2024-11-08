@@ -105,6 +105,10 @@ export class RecoverpassPage {
     }
   }
 
+  navigateBack() {
+    this.router.navigate(['../']);
+  }
+
   updateErrorMessage() {
     if (this.email.hasError('required')) {
       this.errorMessage.set('You must enter a value');

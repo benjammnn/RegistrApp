@@ -16,6 +16,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { AuthService } from './auth.service';
+import { ApiService } from '../services/api.service';
 
 export interface Section {
   name: string;
@@ -35,8 +36,13 @@ export interface Section {
   IonicModule, CdkMenu, CdkMenuItem, CdkMenuTrigger,  MatDividerModule, MatIconModule, MatListModule,  DatePipe, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  username: string = '';
+  email: string = '';
+  password: string ='';
+
   test: boolean = false;
+  posts: any[] = [];
 
   user: any;
   selected = model<Date | null>(null);
@@ -86,9 +92,16 @@ export class HomePage {
     return this.fontSizeMap.get(this.currentScreenSize) || '16px';
   }
 
-  constructor(private authService:AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private apiService: ApiService) {
     const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state;
     const email = navigation?.extras.state?.['user'];
+
+    if (state) {
+      this.username = state['username'] || '';  // Nombre de usuario
+      this.email = state['email'] || '';        // Email
+      this.password = state['password'] || '';  // Contraseña
+    }
 
     this.user = (email && email.indexOf('@') !== -1) ? email.substring(0, email.indexOf('@')) : email;
 
@@ -110,15 +123,21 @@ export class HomePage {
       });
   }
 
+  ngOnInit() {
+    this.apiService.getPosts().subscribe((data: any) => {
+      this.posts = data;
+    });
+  }
+
+  editPost(postId: number) {
+    console.log(`Edit post with id: ${postId}`);
+  }
+
   logOut() {
     this.authService.logOutLs();
     this.test = this.authService.isLoggedIn();
 
     this.refreshPage();
-  }
-
-  ngOnInit() {
-    this.test = this.authService.isLoggedIn();
   }
 
   refreshPage() {

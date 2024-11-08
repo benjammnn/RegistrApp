@@ -11,40 +11,35 @@
         <ion-card-title style="color: white;">Bienvenido a RegistrAPP</ion-card-title>
         <ion-card-subtitle style="color: white;">Formulario de Registro</ion-card-subtitle>
       </ion-card-header>
-    
       <ion-card-content>
-        <ion-list>
+        <form [formGroup]="registerForm" (ngSubmit)="createPost()">
           <ion-item>
-            <ion-input
+            <ion-input formControlName="username" 
               placeholder="Ingrese su usuario"
-              [formControl]="usernameControl"
-              (blur)="updateErrorMessage()"
-              label="Usuario"
+              label="Nombre de usuario"
               labelPlacement="floating"
             ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input
-              placeholder="Ingrese su correo"
-              [formControl]="emailControl"
-              label="Correo"
+            <ion-input formControlName="email"
+              type="email"
+              placeholder="Ingrese su Email"
+              label="Email"
               labelPlacement="floating"
             ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input
+            <ion-input formControlName="password"
+              type="password" 
               placeholder="Ingrese su contraseña"
-              [formControl]="passwordControl"
               label="Contraseña"
               labelPlacement="floating"
-              type="password"
             ></ion-input>
           </ion-item>
-          <ion-button (click)="registrar()" fill="outline">
-            Registrar
-          </ion-button>
-        </ion-list>
-      </ion-card-content>
+          <ion-button type="submit" expand="block" [disabled]="registerForm.invalid">Registrar</ion-button>
+          
+        </form>
+      </ion-card-content>  
     </ion-card>
   </div>
 </ion-content>

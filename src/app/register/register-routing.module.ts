@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { candeactivateGuard } from './candeactivate.guard';
 
 import { RegisterPage } from './register.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: RegisterPage
+    component: RegisterPage,
+    canActivate: [candeactivateGuard],
   }
 ];
 

@@ -2,18 +2,17 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ChangeDetectionStrategy, Component, signal, OnDestroy, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ApiService } from '../services/api.service';
 import { NavController } from '@ionic/angular';
-import { merge, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { Router, NavigationExtras } from '@angular/router';
+import { CanComponentDeactivate } from './candeactivate.guard';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-register',
@@ -33,9 +32,6 @@ export class RegisterPage {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
-  }
-
-  updateErrorMessage() {
   }
 
   navigateBack() {
@@ -60,6 +56,31 @@ export class RegisterPage {
       });
     } else {
       console.log('Registro inválido');
+    }
+  }
+}
+
+export class RouteDeactivate implements CanComponentDeactivate {
+  canDeactivate!: () => Observable<boolean> | Promise<boolean> | boolean;
+  
+  registerForm: FormGroup;
+
+  constructor(private fb: FormBuilder, private apiService: ApiService, private navCtrl: NavController, private router: Router) {
+    this.registerForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+    });
+  }
+  
+  formTest() {
+    console.log(Object.values(this.registerForm.value));
+    let log = Object.values(this.registerForm.value);
+
+    if (log[0] == "" && log[1] == "" && log[2] == "") {
+      return true;
+    } else {
+      return false;
     }
   }
 }

@@ -17,7 +17,10 @@ export class canActivate implements CanActivate {
   }
 }
 
-export function canactivateGuard(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+export function canactivateGuard(
+  route: ActivatedRouteSnapshot, 
+  state: RouterStateSnapshot): 
+boolean {
   const authService = new AuthService();
   const router = new Router();
 

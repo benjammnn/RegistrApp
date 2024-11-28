@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { canactivateGuard } from './home/canactivate.guard';
+import { candeactivateGuard } from './register/candeactivate.guard';
 
 const routes: Routes = [
   {
@@ -18,12 +19,13 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule),
+    canDeactivate: [candeactivateGuard],
   },
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
-    canActivate: [canactivateGuard]
+    canActivate: [canactivateGuard],
   },
   {
     path: '**',

@@ -13,7 +13,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule,BrowserAnimationsModule, MatFormFieldModule, MatInputModule ,IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
+  imports: [BrowserModule,BrowserAnimationsModule, MatFormFieldModule, MatInputModule ,IonicModule.forRoot({rippleEffect: false, mode: 'md'}), AppRoutingModule, ReactiveFormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideAnimationsAsync(), provideHttpClient()],
   bootstrap: [AppComponent],
 })

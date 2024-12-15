@@ -54,6 +54,7 @@ export class HomePage implements OnInit {
   posts: any[] = [];
 
   iniAsistance: boolean = false;
+  enteredClass: boolean = false;
   inputModel = '';
   code: any;
 
@@ -189,8 +190,12 @@ export class HomePage implements OnInit {
     return hash.slice(-5);
   }
 
+  getRandomNumber(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   generateClass() {
-    const num = 10000; // Valor de ejemplo
+    const num = this.getRandomNumber(10000, 99999);
     this.qrValue = this.toHashGet(num);
     this.isClassCreated = true;
   }
@@ -218,6 +223,8 @@ export class HomePage implements OnInit {
   }
 
   enterClass() {
-    console.log("CLASS");
+    if (JSON.stringify(this.ionInputEl.value).length - 2 == 5) {
+      this.enteredClass = true;
+    }
   }
 }

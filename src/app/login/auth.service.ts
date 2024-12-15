@@ -24,9 +24,9 @@ export class AuthService {
 
           let isTeacher;
           if (user) {
-            isTeacher = !(user.id%2); // TEMP IS TEACHER;
+            isTeacher = true; // TEMP IS TEACHER;
           } else {
-            isTeacher = true;
+            isTeacher = false;
           }
           localStorage.setItem('isTeacher', JSON.stringify(isTeacher));
           console.log(isTeacher);

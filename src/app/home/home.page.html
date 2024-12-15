@@ -62,7 +62,9 @@
                   </ion-button>
                 </ion-input>
               </ion-item>
-              <ion-button expand="full" (click)="enterClass()">Ingresar a la clase</ion-button>
+              <div [hidden]="enteredClass">
+                <ion-button expand="full" (click)="enterClass()">Ingresar a la clase</ion-button>
+              </div>
             </div>
           </mat-card>
         </div>
@@ -103,7 +105,6 @@
             </div>
             <div [hidden]="!isClassCreated" style="margin-left: 5%; margin-top: 5%;">
               <p>Código: {{ qrValue }}</p>
-              <p>Alumnos presentes: 0</p>
             </div>
           </mat-card>
         </div>

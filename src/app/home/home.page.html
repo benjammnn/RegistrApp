@@ -7,23 +7,17 @@
     </ion-header>
     <ion-content class="ion-padding">
       <div class="example-menu" cdkMenu>
-        <button class="example-menu-item" cdkMenuItem>Inicio</button><br />
         <button class="example-menu-item" cdkMenuItem>Perfil VivoDuoc</button
-        ><br />
-        <button class="example-menu-item" cdkMenuItem>
-          Registrar asistencia</button
-        ><br />
+        ><br/>
         <button class="example-menu-item" cdkMenuItem>Horario de clases</button
-        ><br />
-        <button class="example-menu-item" cdkMenuItem>Asistencias</button><br />
+        ><br/>
         <button [cdkMenuTriggerFor]="menu" class="example-standalone-trigger">
           Opciones</button
-        ><br />
+        ><br/>
         <ng-template #menu>
           <div class="example-menu" cdkMenu>
-            <button class="example-menu-item" cdkMenuItem>Recargar</button>
             <button class="example-menu-item" cdkMenuItem>
-              Configuraciones
+              Configuración
             </button>
             <button class="example-menu-item" cdkMenuItem>Ayuda</button>
           </div>

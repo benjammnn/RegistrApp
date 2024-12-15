@@ -18,7 +18,9 @@ import { Subject } from 'rxjs';
 import { AuthService } from './auth.service';
 import { ApiService } from '../services/api.service';
 import { QRCodeModule } from 'angularx-qrcode';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import type { IonInput } from '@ionic/angular';
+
 
 export interface Section {
   name: string;
@@ -53,6 +55,8 @@ export class HomePage implements OnInit {
 
   iniAsistance: boolean = false;
   inputModel = '';
+  code: any;
+
   @ViewChild('ionInputEl', { static: false }) ionInputEl!: IonInput;
 
   user: any;
@@ -103,7 +107,7 @@ export class HomePage implements OnInit {
     return this.fontSizeMap.get(this.currentScreenSize) || '16px';
   }
 
-  constructor(private authService: AuthService, private router: Router, private apiService: ApiService, private renderer: Renderer2) {
+  constructor(private authService: AuthService, private router: Router, private apiService: ApiService, private barcadeScanner: BarcodeScanner) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state;
     const email = navigation?.extras.state?.['user'];
@@ -203,7 +207,14 @@ export class HomePage implements OnInit {
   }
 
   openCamera() {
-    console.log("CAMERA");
+    this.barcadeScanner.scan().then(barcodeData => {
+      this.code = barcodeData.text;
+      console.log('Barcode data', this.code);
+    }).catch(err => {
+      console.log('Error', err)
+    });
+
+    this.ionInputEl.value = this.inputModel = this.code;
   }
 
   enterClass() {

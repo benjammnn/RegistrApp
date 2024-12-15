@@ -4,13 +4,13 @@
       <ion-button (click)="navigateBack()" fill="clear">
         <div class="espejo" style="color: #FFB800;">➦</div>
       </ion-button>
-      RegistrAPP
+      <a style="color: #FFFFFF;">isTeacher: {{ isTeacherCheck }}</a> RegistrAPP
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" style="background-color: #FFFFFF;">
-  <div id="container">
+  <div id="container" style="margin-top: 15%;">
     <ion-card [ngClass]="currentScreenClass" 
       style="top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%); border: 1px solid #FFB800; background-color: #FFFFFF;">
       <ion-card-header style="background-color: #FFB800;">

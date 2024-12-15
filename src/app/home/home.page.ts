@@ -1,22 +1,24 @@
-import { Component, OnInit, ChangeDetectionStrategy, model, inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, model, inject, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {CdkMenu, CdkMenuItem,  CdkMenuTrigger} from '@angular/cdk/menu';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
+import { CdkMenu, CdkMenuItem,  CdkMenuTrigger} from '@angular/cdk/menu';
+import { MatButtonModule} from '@angular/material/button';
+import { MatCardModule} from '@angular/material/card';
 import { Router } from '@angular/router';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {provideNativeDateAdapter} from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {IonicModule} from  '@ionic/angular';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatIconModule} from '@angular/material/icon';
-import {DatePipe} from '@angular/common';
-import {MatListModule} from '@angular/material/list';
+import { MatGridListModule} from '@angular/material/grid-list';
+import { provideNativeDateAdapter} from '@angular/material/core';
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import { IonicModule} from  '@ionic/angular';
+import { MatDividerModule} from '@angular/material/divider';
+import { MatIconModule} from '@angular/material/icon';
+import { DatePipe} from '@angular/common';
+import { MatListModule} from '@angular/material/list';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { AuthService } from './auth.service';
 import { ApiService } from '../services/api.service';
+import { QRCodeModule } from 'angularx-qrcode';
+import type { IonInput } from '@ionic/angular';
 
 export interface Section {
   name: string;
@@ -33,16 +35,25 @@ export interface Section {
   standalone : true,
   providers: [provideNativeDateAdapter()],
   imports: [MatGridListModule, MatCardModule, MatDatepickerModule, MatButtonModule, 
-  IonicModule, CdkMenu, CdkMenuItem, CdkMenuTrigger,  MatDividerModule, MatIconModule, MatListModule,  DatePipe, CommonModule],
+  IonicModule, CdkMenu, CdkMenuItem, CdkMenuTrigger,  MatDividerModule, 
+  MatIconModule, MatListModule,  DatePipe, CommonModule, QRCodeModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage implements OnInit {
+  isTeacherCheck: string = "";
+  qrValue: string = "";
+  isClassCreated: boolean = false;
+
   name: string = '';
   username: string = '';
   email: string = '';
 
   test: boolean = false;
   posts: any[] = [];
+
+  iniAsistance: boolean = false;
+  inputModel = '';
+  @ViewChild('ionInputEl', { static: false }) ionInputEl!: IonInput;
 
   user: any;
   selected = model<Date | null>(null);
@@ -92,7 +103,7 @@ export class HomePage implements OnInit {
     return this.fontSizeMap.get(this.currentScreenSize) || '16px';
   }
 
-  constructor(private authService: AuthService, private router: Router, private apiService: ApiService) {
+  constructor(private authService: AuthService, private router: Router, private apiService: ApiService, private renderer: Renderer2) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state;
     const email = navigation?.extras.state?.['user'];
@@ -124,6 +135,8 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
+    this.isTeacherCheck = this.authService.isTeacherCheck();
+
     this.apiService.getPosts().subscribe((data: any) => {
       this.posts = data;
     });
@@ -144,4 +157,56 @@ export class HomePage implements OnInit {
     window.location.reload();
   }
 
+  toHashGet(num: number): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const base = chars.length;
+
+    if (num < 0) {
+        throw new Error('El número debe ser un entero positivo.');
+    }
+
+    const scramble = (n: number): number => {
+        return (n * 31 + 17) % 987654321;
+    };
+
+    num = scramble(num);
+
+    let hash = '';
+    while (num > 0) {
+        const remainder = num % base;
+        hash = chars[remainder] + hash;
+        num = Math.floor(num / base);
+    }
+
+    while (hash.length < 5) {
+        hash = chars[0] + hash;
+    }
+
+    return hash.slice(-5);
+  }
+
+  generateClass() {
+    const num = 10000; // Valor de ejemplo
+    this.qrValue = this.toHashGet(num);
+    this.isClassCreated = true;
+  }
+
+  iniFnAsistance() {
+    this.iniAsistance = true;
+  }
+
+  onInput(ev: any): void {
+    const value = ev.detail.value;
+    const filteredValue = value.replace(/[^a-zA-Z]+/g, '');
+
+    this.ionInputEl.value = this.inputModel = filteredValue;
+  }
+
+  openCamera() {
+    console.log("CAMERA");
+  }
+
+  enterClass() {
+    console.log("CLASS");
+  }
 }

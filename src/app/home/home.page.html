@@ -44,42 +44,79 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding" [ngStyle]="{'font-size': getFontSize()}">
-      <mat-grid-list cols="2" rowHeight="450" >
-        <mat-grid-tile>
-          <mat-card class="demo-inline-calendar-card">
-            <mat-calendar [(selected)]="selected"></mat-calendar>
-            <p style="color: black;">Fecha seleccionada: {{selected()}}</p>
-          </mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <mat-list>
-            <div mat-subheader>
-              <mat-label [ngStyle]="{'font-size': getFontSize()}"></mat-label>
-
-            </div>
-            @for (folder of folders; track folder) {
-              <mat-list-item [ngStyle]="{'font-size': getFontSize()}">
-                <mat-icon matListItemIcon style="color: #1A1A1A;">folders</mat-icon>
-                <div matListItemTitle>{{folder.name}}</div>
-                <div matListItemLine>{{folder.updated | date}}</div>
-              </mat-list-item>
-            }
-            <div mat-subheader></div>
-            @for (note of notes; track note) {
-              <mat-list-item [ngStyle]="{'font-size': getFontSize()}">
-                <mat-icon matListItemIcon style="color: #1A1A1A;">note</mat-icon>
-                <div matListItemTitle>{{note.name}}</div>
-                <div matListItemLine>{{note.updated | date}}</div>
-              </mat-list-item>
-            }
-          </mat-list>
-        </mat-grid-tile>
-      </mat-grid-list>
-      <ion-content class="ion-padding">
+      @if (isTeacherCheck == "false") {
         <p>Nombre completo: {{ name }}</p>
-        <p>Nombre de usuario: {{ username }}</p>
+        <p>Usuario: {{ username }}</p>
         <p>Email: {{ email }}</p>
-      </ion-content>
+        <div style="display: flex; justify-content: center; align-items: center; margin-top: 10%; margin-bottom: 10%;">
+          <mat-card class="demo-inline-calendar-card">
+            <div [hidden]="iniAsistance">
+              <ion-button (click)="iniFnAsistance()" fill="clear" style="color: black;">Ingresar asistencia</ion-button>
+            </div>
+            <div [hidden]="!iniAsistance">
+              <ion-item>
+                <ion-input 
+                  label="Código clase:" 
+                  maxlength="5" 
+                  placeholder="(Manual)"
+                  (ionInput)="onInput($event)"
+                  [value]="inputModel"
+                  #ionInputEl
+                >
+                  <ion-button fill="clear" slot="end" (click)="openCamera()">
+                    <ion-icon slot="icon-only" name="camera" aria-hidden="true" style="color: black;"></ion-icon>
+                  </ion-button>
+                </ion-input>
+              </ion-item>
+              <ion-button expand="full" (click)="enterClass()">Ingresar a la clase</ion-button>
+            </div>
+          </mat-card>
+        </div>
+        <mat-grid-list cols="1" rowHeight="450" > 
+          <mat-grid-tile>
+            <mat-list>
+              <div mat-subheader>
+                <mat-label [ngStyle]="{'font-size': getFontSize()}"></mat-label>
+  
+              </div>
+              @for (folder of folders; track folder) {
+                <mat-list-item [ngStyle]="{'font-size': getFontSize()}">
+                  <mat-icon matListItemIcon style="color: #1A1A1A;">folders</mat-icon>
+                  <div matListItemTitle>{{folder.name}}</div>
+                  <div matListItemLine>{{folder.updated | date}}</div>
+                </mat-list-item>
+              }
+              <div mat-subheader></div>
+              @for (note of notes; track note) {
+                <mat-list-item [ngStyle]="{'font-size': getFontSize()}">
+                  <mat-icon matListItemIcon style="color: #1A1A1A;">note</mat-icon>
+                  <div matListItemTitle>{{note.name}}</div>
+                  <div matListItemLine>{{note.updated | date}}</div>
+                </mat-list-item>
+              }
+            </mat-list>
+          </mat-grid-tile>
+        </mat-grid-list>
+      }
+      @if (isTeacherCheck == "true") {
+        <div style="display: flex; justify-content: center; align-items: center; margin-top: 5%; margin-bottom: 5%;">
+          <mat-card class="demo-inline-calendar-card">
+            <div [hidden]="isClassCreated">
+              <ion-button (click)="generateClass()" fill="clear" style="color: black;">Crear clase</ion-button>
+            </div>
+            <div #qrSpace style="text-align: center;">
+              <qrcode [qrdata]="qrValue" [width]="150" [errorCorrectionLevel]="'H'" [margin]="1"></qrcode>
+            </div>
+            <div [hidden]="!isClassCreated" style="margin-left: 5%; margin-top: 5%;">
+              <p>Código: {{ qrValue }}</p>
+              <p>Alumnos presentes: 0</p>
+            </div>
+          </mat-card>
+        </div>
+        <p>Nombre completo: {{ name }}</p>
+        <p>Usuario: {{ username }}</p>
+        <p>Email: {{ email }}</p>
+      }
     </ion-content>
   </div>
 </ion-content>

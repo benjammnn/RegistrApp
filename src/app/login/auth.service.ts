@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   
   private isAuthenticatedKey = 'isAuthenticated';
+  private isTeacher = 'isTeacher';
   private apiUrl = 'https://jsonplaceholder.typicode.com/users';
 
   constructor(private http: HttpClient) {}
@@ -17,8 +18,19 @@ export class AuthService {
     return this.http.get<any[]>(this.apiUrl).pipe(
       map(users => {
         const user = users.find(u => u.email === email && u.username === password);
+
         if (user || (email === 'admin@duoc.cl' && password === '123')) {
           localStorage.setItem(this.isAuthenticatedKey, 'true');
+
+          let isTeacher;
+          if (user) {
+            isTeacher = !(user.id%2); // TEMP IS TEACHER;
+          } else {
+            isTeacher = true;
+          }
+          localStorage.setItem('isTeacher', JSON.stringify(isTeacher));
+          console.log(isTeacher);
+
           return user || { email: 'admin@duoc.cl', username: 'admin', name: 'Administrador' };
         } else {
           throw new Error('Invalid login credentials');
@@ -29,5 +41,15 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return localStorage.getItem(this.isAuthenticatedKey) === 'true';
+  }
+
+  isTeacherCheck(): string {
+    if (localStorage.getItem(this.isTeacher) === "true") {
+      return "true"
+    } else if (localStorage.getItem(this.isTeacher) === "false") {
+      return "false"
+    } else {
+      return "null"
+    }
   }
 }

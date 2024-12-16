@@ -6,20 +6,11 @@
   * -------------------------------------------------------
   */
 
-    body.barcode-scanning-active {
-        visibility: hidden;
-        --background: transparent;
-        --ion-background-color: transparent;
-    }
+body.barcode-scanning-active {
+    --ion-background-color: transparent !important;
+    --background: transparent !important;
+}
 
-    .barcode-scanning-modal {
-        visibility: visible;
-    }
-
-    @media (prefers-color-scheme: dark) {
-        .barcode-scanning-active {
-            visibility: hidden;
-            --background: transparent;
-            --ion-background-color: transparent;
-        }
-    }
+.barcode-scanning-modal {
+    visibility: visible;
+}

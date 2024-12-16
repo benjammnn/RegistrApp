@@ -23,8 +23,21 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class RegisterPage {
+export class RegisterPage implements CanComponentDeactivate{
+  
   registerForm: FormGroup;
+  isFormDirty = false;
+
+  onInputChange() {
+    this.isFormDirty = true;
+  }
+
+  canDeactivate(): boolean {
+    if (this.isFormDirty) {
+      return confirm('You have unsaved changes. Do you really want to leave?');
+    }
+    return true; // Permitir salir si no hay cambios
+  }
 
   constructor(private fb: FormBuilder, private apiService: ApiService, private navCtrl: NavController, private router: Router) {
     this.registerForm = this.fb.group({
@@ -52,7 +65,8 @@ export class RegisterPage {
             password: newPost.password
           }
         };
-        this.router.navigate(['/home'], navigationExtras);
+        this.isFormDirty = false;
+        this.router.navigate(['/login'], navigationExtras);
       });
     } else {
       console.log('Registro inválido');

@@ -19,7 +19,8 @@
       <ion-card-content>
         <form [formGroup]="registerForm" (ngSubmit)="createPost()">
           <ion-item>
-            <ion-input formControlName="username" 
+            <ion-input (ionChange)="onInputChange()"
+              formControlName="username" 
               placeholder="Ingrese su usuario"
               label="Nombre de usuario"
               labelPlacement="floating"
@@ -27,7 +28,8 @@
             ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input formControlName="email"
+            <ion-input (ionChange)="onInputChange()"
+              formControlName="email"
               type="email"
               placeholder="Ingrese su Email"
               label="Email"
@@ -36,7 +38,8 @@
             ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input formControlName="password"
+            <ion-input (ionChange)="onInputChange()"
+              formControlName="password"
               type="password" 
               placeholder="Ingrese su contraseña"
               label="Contraseña"

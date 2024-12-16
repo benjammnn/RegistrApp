@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { canactivateGuard } from './home/canactivate.guard';
-import { candeactivateGuard } from './register/candeactivate.guard';
+import { RegisterPage } from './register/register.page';
+import { CanDeactivateGuard } from './register/candeactivate.guard';
 
 const routes: Routes = [
   {
@@ -19,8 +20,9 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule),
-    canDeactivate: [candeactivateGuard],
+    component: RegisterPage,
+    //loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule),
+    canDeactivate: [CanDeactivateGuard],
   },
   {
     path: 'home',
@@ -36,7 +38,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes) //, { preloadingStrategy: PreloadAllModules }
   ],
   exports: [RouterModule]
 })

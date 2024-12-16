@@ -17,17 +17,3 @@ export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate>
     return component.canDeactivate ? component.canDeactivate() : true;
   }
 }
-
-export function candeactivateGuard (
-  component: RouteDeactivate
-): boolean {
-  if (component && component.formTest) {
-    console.log('formTest:', component.formTest);
-    if (component.formTest()) {
-      return true;
-    } else {
-      return confirm('You have unsaved changes. Do you really want to leave?');
-    }
-  }
-  return true;
-}

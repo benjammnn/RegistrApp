@@ -11,12 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { QRCodeModule } from 'angularx-qrcode';
-
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule,BrowserAnimationsModule, MatFormFieldModule, MatInputModule ,IonicModule.forRoot({rippleEffect: false, mode: 'md'}), AppRoutingModule, ReactiveFormsModule, QRCodeModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideAnimationsAsync(), provideHttpClient()],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideAnimationsAsync(), provideHttpClient(), BarcodeScanner],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

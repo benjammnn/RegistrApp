@@ -54,6 +54,7 @@ export class RegisterPage implements CanComponentDeactivate{
   createPost() {
     if (this.registerForm.valid) {
       const newPost = this.registerForm.value;
+      localStorage.setItem('userInstance', JSON.stringify(newPost));
 
       this.apiService.createPost(newPost).subscribe((response) => {
         console.log('Post creado:', response);

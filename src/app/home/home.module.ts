@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
+import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { HomePage } from './home.page';
     MatGridListModule,
     HomePage
   ],
-  declarations: [],
+  declarations: [BarcodeScanningModalComponent],
 })
 
 export class HomePageModule {}

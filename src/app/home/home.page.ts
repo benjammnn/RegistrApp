@@ -18,7 +18,9 @@ import { Subject } from 'rxjs';
 import { AuthService } from './auth.service';
 import { ApiService } from '../services/api.service';
 import { QRCodeModule } from 'angularx-qrcode';
-import type { IonInput } from '@ionic/angular';
+import { IonInput, ModalController } from '@ionic/angular';
+import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
+import { LensFacing } from '@capacitor-mlkit/barcode-scanning';
 
 
 export interface Section {
@@ -107,7 +109,12 @@ export class HomePage implements OnInit {
     return this.fontSizeMap.get(this.currentScreenSize) || '16px';
   }
 
-  constructor(private authService: AuthService, private router: Router, private apiService: ApiService) {
+  constructor(
+    private authService: AuthService, 
+    private router: Router, 
+    private apiService: ApiService,
+    private modalController: ModalController
+  ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state;
     const email = navigation?.extras.state?.['user'];
@@ -210,7 +217,25 @@ export class HomePage implements OnInit {
     this.ionInputEl.value = this.inputModel = filteredValue;
   }
 
-  openCamera() {
+  async openCamera() {
+    const modal = await this.modalController.create({
+      component: BarcodeScanningModalComponent,
+      cssClass: 'barcode-scanning-modal',
+      showBackdrop: false,
+      componentProps: {
+        formats: [],
+        LensFacing: LensFacing.Back
+      }
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+
+    if (data) {
+      this.ionInputEl.value = data?.barcode?.displayValue;
+    }
+
   }
 
   enterClass() {

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { MatGridListModule} from '@angular/material/grid-list';
 import { provideNativeDateAdapter} from '@angular/material/core';
 import { MatDatepickerModule} from '@angular/material/datepicker';
-import { IonicModule} from  '@ionic/angular';
+import { IonicModule, Platform} from  '@ionic/angular';
 import { MatDividerModule} from '@angular/material/divider';
 import { MatIconModule} from '@angular/material/icon';
 import { DatePipe} from '@angular/common';
@@ -20,7 +20,7 @@ import { ApiService } from '../services/api.service';
 import { QRCodeModule } from 'angularx-qrcode';
 import { IonInput, ModalController } from '@ionic/angular';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
-import { LensFacing } from '@capacitor-mlkit/barcode-scanning';
+import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 
 
 export interface Section {
@@ -113,6 +113,7 @@ export class HomePage implements OnInit {
     private authService: AuthService, 
     private router: Router, 
     private apiService: ApiService,
+    private platform: Platform,
     private modalController: ModalController
   ) {
     const navigation = this.router.getCurrentNavigation();
@@ -145,12 +146,18 @@ export class HomePage implements OnInit {
       });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.isTeacherCheck = this.authService.isTeacherCheck();
 
     this.apiService.getPosts().subscribe((data: any) => {
       this.posts = data;
     });
+
+    if (this.platform.is('capacitor')) {
+      BarcodeScanner.isSupported().then();
+      BarcodeScanner.checkPermissions().then();
+      BarcodeScanner.removeAllListeners();
+    }
   }
 
   editPost(postId: number) {

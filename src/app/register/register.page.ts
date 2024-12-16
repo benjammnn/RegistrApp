@@ -12,6 +12,7 @@ import { NavController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 import { CanComponentDeactivate } from './candeactivate.guard';
 import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 
 @Component({
@@ -25,8 +26,11 @@ import { Observable } from 'rxjs';
 
 export class RegisterPage {
   registerForm: FormGroup;
+  username: string ='';
+  email = ['', [Validators.required, Validators.email]];
+  password: string ='';
 
-  constructor(private fb: FormBuilder, private apiService: ApiService, private navCtrl: NavController, private router: Router) {
+  constructor(private fb: FormBuilder, private apiService: ApiService, private navCtrl: NavController, private router: Router, private authService: AuthService) {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -58,7 +62,19 @@ export class RegisterPage {
       console.log('Registro inválido');
     }
   }
+
+  register() {
+    if (this.authService.login(this.username, this.password)) {
+    this.router.navigate(['/login'], { state: { username: this.username } });
+    } else {
+    alert('Nombre de usuario o contraseña incorrectos');
+    }
+  }
+  
+
 }
+
+  
 
 export class RouteDeactivate implements CanComponentDeactivate {
   canDeactivate!: () => Observable<boolean> | Promise<boolean> | boolean;

@@ -32,10 +32,13 @@
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
- body.barcode-scanning-active {
+  body.barcode-scanning-active {
+    position: relative;
     --ion-background-color: transparent !important;
     --background: transparent !important;
     background-color: transparent !important;
+
+    z-index: 10;
   }
   
   html,

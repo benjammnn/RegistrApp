@@ -32,6 +32,23 @@
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
+ body.barcode-scanning-active {
+    --ion-background-color: transparent !important;
+    --background: transparent !important;
+    background-color: transparent !important;
+  }
+  
+  html,
+  body {
+    background-color: transparent !important;
+  }
+  
+  .barcode-scanning-modal {
+    z-index: 9999;
+    background: transparent !important;
+    visibility: visible;
+  }
+
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 /* @import "@ionic/angular/css/palettes/dark.system.css"; */

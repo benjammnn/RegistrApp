@@ -56,6 +56,7 @@ export class HomePage implements OnInit {
 
   iniAsistance: boolean = false;
   enteredClass: boolean = false;
+  bttnIngreso: string = "Ingresar a la clase";
   inputModel = '';
   code: any;
 
@@ -247,6 +248,7 @@ export class HomePage implements OnInit {
 
   enterClass() {
     if (JSON.stringify(this.ionInputEl.value).length - 2 == 5) {
+      this.bttnIngreso = "Asistencia registrada";
       this.enteredClass = true;
     }
   }

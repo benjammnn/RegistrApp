@@ -54,15 +54,16 @@
                   maxlength="5" 
                   placeholder="(Manual)"
                   (ionInput)="onInput($event)"
+                  [disabled]="enteredClass"
                   [value]="inputModel"
                   #ionInputEl
                 >
-                  <ion-button fill="clear" slot="end" (click)="openCamera()">
+                  <ion-button [disabled]="enteredClass" fill="clear" slot="end" (click)="openCamera()">
                     <ion-icon slot="icon-only" name="camera" aria-hidden="true" style="color: black;"></ion-icon>
                   </ion-button>
                 </ion-input>
               </ion-item>
-              <ion-button expand="full" (click)="enterClass()">Ingresar a la clase</ion-button>
+              <ion-button [disabled]="enteredClass" expand="full" (click)="enterClass()">{{ bttnIngreso }}</ion-button>
             </div>
           </mat-card>
         </div>

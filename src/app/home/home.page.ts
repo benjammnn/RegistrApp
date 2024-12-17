@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, model, inject, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { CdkMenu, CdkMenuItem,  CdkMenuTrigger} from '@angular/cdk/menu';
 import { MatButtonModule} from '@angular/material/button';
 import { MatCardModule} from '@angular/material/card';
@@ -21,7 +22,6 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { IonInput, ModalController } from '@ionic/angular';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
-
 
 export interface Section {
   name: string;
@@ -46,6 +46,7 @@ export class HomePage implements OnInit {
   isTeacherCheck: string = "";
   qrValue: string = "";
   isClassCreated: boolean = false;
+  tittle: string = 'Login de Registrapp'
 
   name: string = '';
   username: string = '';
@@ -159,6 +160,14 @@ export class HomePage implements OnInit {
       BarcodeScanner.checkPermissions().then();
       BarcodeScanner.removeAllListeners();
     }
+  }
+
+  onLoginClick(): void {
+    console.log('Login button clicked');
+  }
+
+  changeTitle(): void {
+    this.tittle = 'Nuevo Título';
   }
 
   editPost(postId: number) {

@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ChangeDetectionStrategy, Component, signal, OnDestroy, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,6 +23,8 @@ import { AuthService } from './auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPage implements OnDestroy, OnInit {
+
+  loginForm: FormGroup;
 
   readonly email = new FormControl('', [Validators.required, Validators.email]);
   readonly password = new FormControl('', [Validators.required]);
@@ -74,7 +76,7 @@ export class LoginPage implements OnDestroy, OnInit {
     }
   }
 
-  constructor(private authService:AuthService, private router: Router) {
+  constructor(private authService:AuthService, private router: Router, private fb: FormBuilder) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
@@ -96,6 +98,11 @@ export class LoginPage implements OnDestroy, OnInit {
           }
         }
       });
+    
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });  
   }
 
   login() {
@@ -141,11 +148,20 @@ export class LoginPage implements OnDestroy, OnInit {
     this.destroyed.complete();
   }
 
-  ngOnInit() {
+  ngOnInit(): void  {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
     this.isLoggedCheck = this.authService.isLoggedIn();
     this.isTeacherCheck = this.authService.isTeacherCheck();
   }
 
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      console.log('Login form submitted:', this.loginForm.value);
+    }
+  }
   updateErrorMessage() {
     if (this.email.hasError('required')) {
       this.errorMessage.set('You must enter a value');

@@ -36,7 +36,7 @@ export class RegisterPage implements CanComponentDeactivate{
     if (this.isFormDirty) {
       return confirm('You have unsaved changes. Do you really want to leave?');
     }
-    return true; // Permitir salir si no hay cambios
+    return true;
   }
 
   constructor(private fb: FormBuilder, private apiService: ApiService, private navCtrl: NavController, private router: Router) {
@@ -55,7 +55,10 @@ export class RegisterPage implements CanComponentDeactivate{
     if (this.registerForm.valid) {
       const newPost = this.registerForm.value;
       localStorage.setItem('userInstance', JSON.stringify(newPost));
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
       this.apiService.createPost(newPost).subscribe((response) => {
         console.log('Post creado:', response);
 
@@ -73,6 +76,13 @@ export class RegisterPage implements CanComponentDeactivate{
       console.log('Registro inválido');
     }
   }
+
+  onSubmit() {
+    if (this.registerForm.valid) {
+      console.log('Form submitted', this.registerForm.value);
+    }
+  }  
+
 }
 
 export class RouteDeactivate implements CanComponentDeactivate {
